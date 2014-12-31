@@ -2563,7 +2563,7 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
         final BuyPortfolioTreeTableModelEx buyPortfolioTreeTableModel = (BuyPortfolioTreeTableModelEx)this.buyTreeTable.getTreeTableModel();
         final SellPortfolioTreeTableModelEx sellPortfolioTreeTableModel = (SellPortfolioTreeTableModelEx)this.sellTreeTable.getTreeTableModel();
       
-        final double exchangeRate = getCurrencyExchangeRate();
+        final double exchangeRate =1.0;// getCurrencyExchangeRate();
 
         final double share;
         final double cash;
@@ -2685,10 +2685,10 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
     }
 
     public void refreshCurrencyExchangeMonitor() {
-        CurrencyExchangeMonitor _currencyExchangeMonitor = this.currencyExchangeMonitor;
-        if (_currencyExchangeMonitor != null) {
-            _currencyExchangeMonitor.refresh();
-        }
+//        CurrencyExchangeMonitor _currencyExchangeMonitor = this.currencyExchangeMonitor;
+//        if (_currencyExchangeMonitor != null) {
+//            _currencyExchangeMonitor.refresh();
+//        }
     }
     
     public void refreshRealTimeStockMonitor() {
