@@ -121,7 +121,7 @@ public class NewBuyTransactionJDialog extends javax.swing.JDialog {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/yccheok/jstock/data/gui"); // NOI18N
         jLabel7.setText(bundle.getString("NewBuyTransactionJDialog_Broker")); // NOI18N
 
-        jFormattedTextField3.setValue(new Double(0.0));
+        jFormattedTextField3.setValue(0.0);
         jFormattedTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -129,7 +129,7 @@ public class NewBuyTransactionJDialog extends javax.swing.JDialog {
             }
         });
 
-        jFormattedTextField4.setValue(new Double(0.0));
+        jFormattedTextField4.setValue(0.0);
         jFormattedTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -141,7 +141,7 @@ public class NewBuyTransactionJDialog extends javax.swing.JDialog {
 
         jLabel9.setText(bundle.getString("NewBuyTransactionJDialog_StampDuty")); // NOI18N
 
-        jFormattedTextField5.setValue(new Double(0.0));
+        jFormattedTextField5.setValue(0.0);
         jFormattedTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -151,7 +151,7 @@ public class NewBuyTransactionJDialog extends javax.swing.JDialog {
 
         jFormattedTextField6.setEditable(false);
         jFormattedTextField6.setFont(jFormattedTextField6.getFont().deriveFont(jFormattedTextField6.getFont().getStyle() | java.awt.Font.BOLD));
-        jFormattedTextField6.setValue(new Double(0.0));
+        jFormattedTextField6.setValue(0.0);
 
         jLabel10.setFont(jLabel10.getFont().deriveFont(jLabel10.getFont().getStyle() | java.awt.Font.BOLD));
         jLabel10.setText(bundle.getString("NewBuyTransactionJDialog_NetValue")); // NOI18N
@@ -160,6 +160,7 @@ public class NewBuyTransactionJDialog extends javax.swing.JDialog {
         setTitle(bundle.getString("NewBuyTransactionJDialog_Buy")); // NOI18N
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
@@ -169,12 +170,13 @@ public class NewBuyTransactionJDialog extends javax.swing.JDialog {
 
         jLabel2.setText(bundle.getString("NewSellTransactionJDialog_Symbol")); // NOI18N
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(100.0d), Double.valueOf(0.0010d), null, Double.valueOf(100.0d)));
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(100.0d, 0.0010d, null, 100.0d));
         JSpinner.NumberEditor numberEditor = (JSpinner.NumberEditor)jSpinner1.getEditor();
         final DecimalFormat decimalFormat = numberEditor.getFormat();
         decimalFormat.setMaximumFractionDigits(4);
         numberEditor.getTextField().addMouseListener(getJFormattedTextFieldMouseListener());
         jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSpinner1StateChanged(evt);
             }
@@ -186,8 +188,9 @@ public class NewBuyTransactionJDialog extends javax.swing.JDialog {
 
         jLabel4.setText(bundle.getString("NewBuyTransactionJDialog_Date")); // NOI18N
 
-        jFormattedTextField1.setValue(new Double(0.0));
+        jFormattedTextField1.setValue(0.0);
         jFormattedTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jFormattedTextField1KeyTyped(evt);
             }
@@ -195,7 +198,7 @@ public class NewBuyTransactionJDialog extends javax.swing.JDialog {
 
         jFormattedTextField2.setEditable(false);
         jFormattedTextField2.setFont(jFormattedTextField2.getFont().deriveFont(jFormattedTextField2.getFont().getStyle() | java.awt.Font.BOLD));
-        jFormattedTextField2.setValue(new Double(0.0));
+        jFormattedTextField2.setValue(0.0);
 
         jLabel1.setText(bundle.getString("NewBuyTransactionJDialog_Unit")); // NOI18N
 
@@ -271,6 +274,7 @@ public class NewBuyTransactionJDialog extends javax.swing.JDialog {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/16x16/apply.png"))); // NOI18N
         jButton1.setText(bundle.getString("NewBuyTransactionJDialog_OK")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
@@ -280,6 +284,7 @@ public class NewBuyTransactionJDialog extends javax.swing.JDialog {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/16x16/button_cancel.png"))); // NOI18N
         jButton2.setText(bundle.getString("NewBuyTransactionJDialog_Cancel")); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
@@ -747,7 +752,11 @@ public class NewBuyTransactionJDialog extends javax.swing.JDialog {
 
         if (isFeeCalculationEnabled && shouldAutoCalculateBrokerFee())
         {
-            final BrokingFirm brokingFirm = JStock.getInstance().getJStockOptions().getSelectedBrokingFirm();
+            //use default Broking firm if there is no Portfolio Specific Broking firm set
+            BrokingFirm bFirm = JStock.getInstance().getJStockOptions().getSelectedBrokingFirm();
+            if(brokingFirm != null){
+                bFirm = brokingFirm;
+            }
             
             final String name = jTextField1.getText();
             final double unit = (Double)jSpinner1.getValue();
@@ -758,9 +767,9 @@ public class NewBuyTransactionJDialog extends javax.swing.JDialog {
             Contract.ContractBuilder builder = new Contract.ContractBuilder(org.yccheok.jstock.engine.Utils.getEmptyStock(Code.newInstance(name), Symbol.newInstance(name)), new SimpleDate(date));        
             Contract contract = builder.type(Contract.Type.Buy).quantity(unit).price(price).build();
 
-            final double brokerFee = brokingFirm.brokerCalculate(contract);
-            final double clearingFee = brokingFirm.clearingFeeCalculate(contract);
-            final double stampDuty = brokingFirm.stampDutyCalculate(contract);
+            final double brokerFee = bFirm.brokerCalculate(contract);
+            final double clearingFee = bFirm.clearingFeeCalculate(contract);
+            final double stampDuty = bFirm.stampDutyCalculate(contract);
             jFormattedTextField3.setValue(brokerFee);
             jFormattedTextField4.setValue(clearingFee);
             jFormattedTextField5.setValue(stampDuty);
@@ -967,6 +976,15 @@ public class NewBuyTransactionJDialog extends javax.swing.JDialog {
     private Transaction transaction = null;
     private String transactionComment = "";
     private Stock stock = null;
+    private BrokingFirm brokingFirm;
+
+    public BrokingFirm getBrokingFirm() {
+        return brokingFirm;
+    }
+
+    public void setBrokingFirm(BrokingFirm brokingFirm) {
+        this.brokingFirm = brokingFirm;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

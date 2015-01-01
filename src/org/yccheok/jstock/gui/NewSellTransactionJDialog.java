@@ -935,7 +935,15 @@ public class NewSellTransactionJDialog extends javax.swing.JDialog {
             _update();
         }});
     }
-    
+     private BrokingFirm brokingFirm;
+
+    public BrokingFirm getBrokingFirm() {
+        return brokingFirm;
+    }
+
+    public void setBrokingFirm(BrokingFirm brokingFirm) {
+        this.brokingFirm = brokingFirm;
+    }
     private void _update() {
         // Commit the value first before updating. This is to prevent
         // double rounding issue. We force the current value to
@@ -947,7 +955,11 @@ public class NewSellTransactionJDialog extends javax.swing.JDialog {
         
         if (isFeeCalculationEnabled && shouldAutoCalculateBrokerFee())
         {
-            final BrokingFirm brokingFirm = JStock.getInstance().getJStockOptions().getSelectedBrokingFirm();
+            //use default Broking firm if there is no Portfolio Specific Broking firm set
+            BrokingFirm bFirm = JStock.getInstance().getJStockOptions().getSelectedBrokingFirm();
+            if (brokingFirm != null) {
+                bFirm = brokingFirm;
+            }
 
             final String name = jTextField1.getText();
             final double unit = (Double)jSpinner1.getValue();
@@ -958,9 +970,9 @@ public class NewSellTransactionJDialog extends javax.swing.JDialog {
             Contract.ContractBuilder builder = new Contract.ContractBuilder(org.yccheok.jstock.engine.Utils.getEmptyStock(Code.newInstance(name), Symbol.newInstance(name)), new SimpleDate(date));
             Contract contract = builder.type(Contract.Type.Sell).quantity(unit).price(price).build();
 
-            final double brokerFee = brokingFirm.brokerCalculate(contract);
-            final double clearingFee = brokingFirm.clearingFeeCalculate(contract);
-            final double stampDuty = brokingFirm.stampDutyCalculate(contract);
+            final double brokerFee = bFirm.brokerCalculate(contract);
+            final double clearingFee = bFirm.clearingFeeCalculate(contract);
+            final double stampDuty = bFirm.stampDutyCalculate(contract);
             jFormattedTextField4.setValue(brokerFee);
             jFormattedTextField5.setValue(clearingFee);
             jFormattedTextField7.setValue(stampDuty);

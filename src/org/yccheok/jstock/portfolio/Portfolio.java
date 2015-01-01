@@ -203,5 +203,21 @@ public class Portfolio extends DefaultSortableMutableTreeTableNode implements Co
     @Override
     public Object getValueAt(int column) {
         return treeTableModel.getValueAt(this, column);
-    }    
+    }   
+    
+    BrokingFirm brokingFirm;
+
+    public BrokingFirm getBrokingFirm() {
+        return brokingFirm;
+    }
+
+    /**
+     * set BrokingFirm to be used for transactions
+     * in this PortFolio
+     * @param brokingFirm 
+     */
+    public void setBrokingFirm(BrokingFirm brokingFirm) {
+        this.brokingFirm = brokingFirm;
+    }
+    
 }

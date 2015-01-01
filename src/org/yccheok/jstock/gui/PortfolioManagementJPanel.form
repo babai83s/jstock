@@ -280,6 +280,21 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JComboBox" name="cmbBroker">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbBrokerActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="int bSize = JStock.getInstance().getJStockOptions().getBrokingFirmSize();&#xa;BrokingFirm[] brokers = new BrokingFirm[bSize];&#xa;for(int i=0; i&lt;bSize; i++)brokers[i] = JStock.getInstance().getJStockOptions().getBrokingFirm(i);&#xa;cmbBroker.setModel(new DefaultComboBoxModel&lt;BrokingFirm&gt;(brokers));"/>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="PortfolioManagementJPanel_cmbBroker"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;BrokingFirm&gt;"/>
+          </AuxValues>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

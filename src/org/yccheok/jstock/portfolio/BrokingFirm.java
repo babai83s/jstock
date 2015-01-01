@@ -186,4 +186,11 @@ public class BrokingFirm {
         SimpleClearingFee simpleClearingFee = new SimpleClearingFee((SimpleClearingFee)clearingFee);
         return simpleClearingFee;
     }
+
+    @Override
+    public String toString() {
+        //BrokingFirm is used in comboboxes so tostring method needs to be overridden
+        return name; 
+    }
+    
 }

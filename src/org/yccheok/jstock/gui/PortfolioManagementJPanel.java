@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -161,6 +162,7 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        cmbBroker = new javax.swing.JComboBox<BrokingFirm>();
 
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -317,6 +319,17 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
             }
         });
         jPanel2.add(jButton5);
+
+        int bSize = JStock.getInstance().getJStockOptions().getBrokingFirmSize();
+        BrokingFirm[] brokers = new BrokingFirm[bSize];
+        for(int i=0; i<bSize; i++)brokers[i] = JStock.getInstance().getJStockOptions().getBrokingFirm(i);
+        cmbBroker.setModel(new DefaultComboBoxModel<BrokingFirm>(brokers));
+        cmbBroker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBrokerActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cmbBroker);
 
         add(jPanel2, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
@@ -595,16 +608,16 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
                             // Legacy file handling. PortfolioManagementJPanel_PurchaseFee is introduced starting from 1.0.6s
                             purchaseBroker = statement.getValueAsDouble(guiBundleWrapper.getString("PortfolioManagementJPanel_PurchaseFee"));
                             if (purchaseBroker == null) {
-                                purchaseBroker = new Double(0.0);
+                                purchaseBroker = 0.0;
                             }
                         }
                         Double purchaseClearingFee = statement.getValueAsDouble(guiBundleWrapper.getString("PortfolioManagementJPanel_PurchaseClearingFee"));
                         if (purchaseClearingFee == null) {
-                            purchaseClearingFee = new Double(0.0);                            
+                            purchaseClearingFee = 0.0;                            
                         }
                         Double purchaseStampDuty = statement.getValueAsDouble(guiBundleWrapper.getString("PortfolioManagementJPanel_PurchaseStampDuty"));
                         if (purchaseStampDuty == null) {
-                            purchaseStampDuty = new Double(0.0);                            
+                            purchaseStampDuty = 0.0;                            
 
                         }                        
                         final String _date = statement.getValueAsString(guiBundleWrapper.getString("PortfolioManagementJPanel_Date"));
@@ -616,7 +629,7 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
                         final Double stampDuty = statement.getValueAsDouble(guiBundleWrapper.getString("PortfolioManagementJPanel_StampDuty"));
                         final String _comment = statement.getValueAsString(guiBundleWrapper.getString("PortfolioManagementJPanel_Comment"));
 
-                        Stock stock = null;
+                        Stock stock ;
                         if (_code.length() > 0 && _symbol.length() > 0) {
                             stock = org.yccheok.jstock.engine.Utils.getEmptyStock(Code.newInstance(_code), Symbol.newInstance(_symbol));
                         }
@@ -746,7 +759,6 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
                                 } catch (ParseException exp) {
                                     log.error(null, exp);
                                     date = null;
-                                    dateFormat = null;
                                     continue;
                                 }
                                 // We had found our best dateFormat. Early break.
@@ -815,7 +827,7 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
 
                     for (int i = 0; i < size; i++) {
                         Date date = null;
-                        StockInfo stockInfo = null;
+                        StockInfo stockInfo ;
                         final Statement statement = statements.get(i);
                         final String object0 = statement.getValueAsString(guiBundleWrapper.getString("PortfolioManagementJPanel_Date"));
                         assert(object0 != null);
@@ -961,6 +973,7 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
         newSellTransactionJDialog.setLocationRelativeTo(this);
         newSellTransactionJDialog.setBuyTransactions(buyTransactions);       
         newSellTransactionJDialog.setVisible(true);
+        newSellTransactionJDialog.setBrokingFirm(cmbBroker.getItemAt(cmbBroker.getSelectedIndex()));
         
         final List<Transaction> newSellTransactions = newSellTransactionJDialog.getTransactions();
         
@@ -1045,7 +1058,7 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
         newTransactionJDialog.setPrice(lastPrice);
         newTransactionJDialog.setJComboBoxEnabled(JComboBoxEnabled);
         newTransactionJDialog.setStockInfoDatabase(stockInfoDatabase);
-
+        newTransactionJDialog.setBrokingFirm(cmbBroker.getItemAt(cmbBroker.getSelectedIndex()));
         // If we are not in portfolio page, we shall provide user a hint, so that
         // user will know this transaction will go into which portfolio, without
         // having to click on the Portfolio drop-down menu.
@@ -1149,6 +1162,12 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         showDividendSummaryJDialog();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void cmbBrokerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBrokerActionPerformed
+         BuyPortfolioTreeTableModelEx portfolioTreeTableModel = (BuyPortfolioTreeTableModelEx)buyTreeTable.getTreeTableModel();
+         Portfolio pf = (Portfolio) portfolioTreeTableModel.getRoot();
+         pf.setBrokingFirm(cmbBroker.getItemAt(cmbBroker.getSelectedIndex()));
+    }//GEN-LAST:event_cmbBrokerActionPerformed
 
     // When transaction summary being selected, we assume all its transactions are being selected.
     // This is most of the users intention too, I guess.
@@ -1370,7 +1389,7 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
 
         JPopupMenu popup = new JPopupMenu();
 
-        JMenuItem menuItem = null;
+        JMenuItem menuItem ;
 
         menuItem = new JMenuItem(GUIBundle.getString("PortfolioManagementJPanel_Cash..."), this.getImageIcon("/images/16x16/money.png"));
 
@@ -1795,7 +1814,7 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
         List<StockInfo> stockInfos = new ArrayList<StockInfo>();
 
         final int count = buyPortfolio.getChildCount();
-        TransactionSummary transactionSummary = null;
+        TransactionSummary transactionSummary;
         for (int i = 0; i < count; i++) {
             transactionSummary = (TransactionSummary)buyPortfolio.getChildAt(i);
 
@@ -1812,7 +1831,6 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
         }
 
         final int count2 = sellPortfolio.getChildCount();
-        transactionSummary = null;
         for (int i = 0; i < count2; i++) {
             transactionSummary = (TransactionSummary)sellPortfolio.getChildAt(i);
 
@@ -2723,6 +2741,7 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.yccheok.jstock.gui.treetable.SortableTreeTable buyTreeTable;
+    private javax.swing.JComboBox<BrokingFirm> cmbBroker;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
