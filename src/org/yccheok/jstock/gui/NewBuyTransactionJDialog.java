@@ -56,7 +56,9 @@ import org.yccheok.jstock.portfolio.Transaction;
  * @author  yccheok
  */
 public class NewBuyTransactionJDialog extends javax.swing.JDialog {
-    /** Creates new form NewBuyTransactionJDialog */
+    /** Creates new form NewBuyTransactionJDialog
+     * @param parent
+     * @param modal */
     public NewBuyTransactionJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         
