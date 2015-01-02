@@ -67,6 +67,7 @@ import org.yccheok.jstock.file.Statement;
 import org.yccheok.jstock.file.Statements;
 import org.yccheok.jstock.gui.Utils.FileEx;
 import org.yccheok.jstock.gui.charting.InvestmentFlowChartJDialog;
+import org.yccheok.jstock.gui.options.PortFolioOptions;
 import org.yccheok.jstock.gui.portfolio.CommentJDialog;
 import org.yccheok.jstock.gui.portfolio.DepositSummaryJDialog;
 import org.yccheok.jstock.gui.portfolio.DepositSummaryTableModel;
@@ -88,6 +89,13 @@ import org.yccheok.jstock.portfolio.*;
  * @author  Owner
  */
 public class PortfolioManagementJPanel extends javax.swing.JPanel {
+
+    private void savePortFolioConfig() {
+        PortFolioOptions pOpt = new PortFolioOptions();
+        pOpt.setBroker((BrokingFirm) cmbBroker.getSelectedItem());
+        File f = new File(org.yccheok.jstock.portfolio.Utils.getPortfolioDirectory(),"config.xml");
+        Utils.toXML(pOpt, f);
+    }
        
     public static final class CSVPortfolio {
         public final BuyPortfolioTreeTableModelEx buyPortfolioTreeTableModel;
@@ -453,6 +461,9 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
     }
 
     public boolean openAsCSVFile(File file) {
+        File f = new File(org.yccheok.jstock.portfolio.Utils.getPortfolioDirectory(),"config.xml");
+        PortFolioOptions pOpt = Utils.fromXML(PortFolioOptions.class, f);
+        cmbBroker.setSelectedItem(pOpt.getBroker());
         final Statements statements = Statements.newInstanceFromCSVFile(file);
         return this.openAsStatements(statements, file);
     }
@@ -491,7 +502,7 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
                         final Double stampDuty = statement.getValueAsDouble(guiBundleWrapper.getString("PortfolioManagementJPanel_StampDuty"));
                         final String _comment = statement.getValueAsString(guiBundleWrapper.getString("PortfolioManagementJPanel_Comment"));
 
-                        Stock stock = null;
+                        Stock stock ;
                         if (_code.length() > 0 && _symbol.length() > 0) {
                             stock = org.yccheok.jstock.engine.Utils.getEmptyStock(Code.newInstance(_code), Symbol.newInstance(_symbol));
                         }
@@ -514,7 +525,6 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
                                 } catch (ParseException exp) {
                                     log.error(null, exp);
                                     date = null;
-                                    dateFormat = null;
                                     continue;
                                 }
                                 // We had found our best dateFormat. Early break.
@@ -656,7 +666,6 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
                                     log.error(null, exp);
                                     date = null;
                                     referenceDate = null;
-                                    dateFormat = null;
                                     continue;
                                 }
                                 // We had found our best dateFormat. Early break.
@@ -844,7 +853,6 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
                                 } catch (ParseException exp) {
                                     log.error(null, exp);
                                     date = null;
-                                    dateFormat = null;
                                     continue;
                                 }
                                 // We had found our best dateFormat. Early break.
@@ -1167,6 +1175,7 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
          BuyPortfolioTreeTableModelEx portfolioTreeTableModel = (BuyPortfolioTreeTableModelEx)buyTreeTable.getTreeTableModel();
          Portfolio pf = (Portfolio) portfolioTreeTableModel.getRoot();
          pf.setBrokingFirm(cmbBroker.getItemAt(cmbBroker.getSelectedIndex()));
+         savePortFolioConfig();
     }//GEN-LAST:event_cmbBrokerActionPerformed
 
     // When transaction summary being selected, we assume all its transactions are being selected.
@@ -2310,6 +2319,7 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
     }
 
     public boolean savePortfolio() {
+        savePortFolioConfig();
         return saveCSVPortfolio();
     }
 
@@ -2544,7 +2554,7 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
     }
 
     private static boolean saveAsCSVFile(CSVPortfolio csvPortfolio, Utils.FileEx fileEx, boolean languageIndependent) {
-        org.yccheok.jstock.file.Statements statements = null;
+        org.yccheok.jstock.file.Statements statements;
         if (fileEx.type == org.yccheok.jstock.file.Statement.Type.PortfolioManagementBuy) {
             // For buy portfolio, need not save metadata information, as we have
             // seperate "stockprices.csv" to handle it. However, I am not really
@@ -2559,7 +2569,9 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
         }
         else if (fileEx.type == org.yccheok.jstock.file.Statement.Type.PortfolioManagementDeposit) {
             statements = org.yccheok.jstock.file.Statements.newInstanceFromTableModel(new DepositSummaryTableModel(csvPortfolio.depositSummary), languageIndependent);
-        }
+        }else{
+            return false;
+        }        
         // Use metadata to store TransactionSummary's comment.
         return statements.saveAsCSVFile(fileEx.file);
     }

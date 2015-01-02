@@ -66,12 +66,12 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        lstBrokingFirm = new javax.swing.JList();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        deleteBrokingFirm = new javax.swing.JButton();
+        editBrokingFirm = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jFormattedTextField1 = getCurrencyJFormattedTextField(0.0);
         jFormattedTextField2 = getCurrencyJFormattedTextField(0.0);
@@ -112,14 +112,14 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("OptionsBrokerJPanel_BrokingFirm"))); // NOI18N
 
-        jList1.setModel(new DefaultListModel());
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        lstBrokingFirm.setModel(new DefaultListModel());
+        lstBrokingFirm.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstBrokingFirm.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jList1ValueChanged(evt);
+                lstBrokingFirmValueChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(lstBrokingFirm);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel6.setLayout(new java.awt.BorderLayout());
@@ -135,17 +135,17 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
             }
         });
 
-        jButton2.setText(bundle.getString("OptionsBrokerJPanel_Delete")); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        deleteBrokingFirm.setText(bundle.getString("OptionsBrokerJPanel_Delete")); // NOI18N
+        deleteBrokingFirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                deleteBrokingFirmActionPerformed(evt);
             }
         });
 
-        jButton3.setText(bundle.getString("OptionsBrokerJPanel_Edit...")); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        editBrokingFirm.setText(bundle.getString("OptionsBrokerJPanel_Edit...")); // NOI18N
+        editBrokingFirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                editBrokingFirmActionPerformed(evt);
             }
         });
 
@@ -194,7 +194,7 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(6, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("OptionsBrokerJPanel_ClearingFee"))); // NOI18N
@@ -242,7 +242,7 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jFormattedTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(6, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("OptionsBrokerJPanel_StampDuty"))); // NOI18N
@@ -274,7 +274,7 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
                     .addComponent(jFormattedTextField9)
                     .addComponent(jFormattedTextField8)
                     .addComponent(jFormattedTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,9 +303,9 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
                         .addContainerGap()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
+                        .addComponent(editBrokingFirm)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2))
+                        .addComponent(deleteBrokingFirm))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addContainerGap()
@@ -331,13 +331,13 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
                     .addComponent(jScrollPane1, 0, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
+                    .addComponent(editBrokingFirm)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(deleteBrokingFirm))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, 0, 105, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -387,10 +387,10 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
         
         if(brokingFirm != null) {
             this.brokingFirms.add(brokingFirm);
-            final ListModel listModel = this.jList1.getModel();
+            final ListModel listModel = this.lstBrokingFirm.getModel();
             final DefaultListModel defaultListModel = (DefaultListModel)(listModel);
             defaultListModel.addElement(brokingFirm.getName());  
-            this.jList1.setSelectedIndex(defaultListModel.size() - 1);
+            this.lstBrokingFirm.setSelectedIndex(defaultListModel.size() - 1);
         }
         this.updateGUIState();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -416,7 +416,7 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
         }        
     }
     
-    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
+    private void lstBrokingFirmValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstBrokingFirmValueChanged
         // TODO add your handling code here:
         final javax.swing.event.ListSelectionEvent e = evt;
         
@@ -469,9 +469,9 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
                 OptionsBrokerJPanel.this.currentSelectedBrokingFirm = brokingFirm;                
             }
         });
-    }//GEN-LAST:event_jList1ValueChanged
+    }//GEN-LAST:event_lstBrokingFirmValueChanged
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void editBrokingFirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBrokingFirmActionPerformed
         // TODO add your handling code here:
         if(this.currentSelectedBrokingFirm == null) return;
         
@@ -483,40 +483,40 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
         final BrokingFirm brokingFirm = newBrokingFirmJDialog.getBrokingFirm();
         
         if(brokingFirm != null) {
-            final int index = this.jList1.getSelectedIndex();
+            final int index = this.lstBrokingFirm.getSelectedIndex();
             this.brokingFirms.remove(index);            
             this.brokingFirms.add(index, brokingFirm);
-            final ListModel listModel = this.jList1.getModel();
+            final ListModel listModel = this.lstBrokingFirm.getModel();
             final DefaultListModel defaultListModel = (DefaultListModel)(listModel);
             defaultListModel.removeElementAt(index);
             defaultListModel.add(index, brokingFirm.getName());  
-            this.jList1.setSelectedIndex(index);
+            this.lstBrokingFirm.setSelectedIndex(index);
         }
         
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_editBrokingFirmActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void deleteBrokingFirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBrokingFirmActionPerformed
         // TODO add your handling code here:
-        final int index = this.jList1.getSelectedIndex();
+        final int index = this.lstBrokingFirm.getSelectedIndex();
         if(index < 0) return;
         
         this.brokingFirms.remove(index);    
-        final ListModel listModel = this.jList1.getModel();
+        final ListModel listModel = this.lstBrokingFirm.getModel();
         final DefaultListModel defaultListModel = (DefaultListModel)(listModel);
         defaultListModel.removeElementAt(index);
         
         if(index > 0) {
-            this.jList1.setSelectedIndex(index - 1);
+            this.lstBrokingFirm.setSelectedIndex(index - 1);
         }
         else {
             if(defaultListModel.getSize() > 0)
-                this.jList1.setSelectedIndex(0);
+                this.lstBrokingFirm.setSelectedIndex(0);
             else
-                this.jList1.clearSelection();
+                this.lstBrokingFirm.clearSelection();
         }
 
         this.updateGUIState();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_deleteBrokingFirmActionPerformed
 
     private void jCheckBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox2ItemStateChanged
         updateGUIState();
@@ -528,15 +528,15 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
         
         final boolean state0 = mother_of_all_state & jCheckBox1.isSelected();
         // Only allow selection when user had selected a broker firm.
-        final boolean state1 = mother_of_all_state & jCheckBox1.isSelected() && (jList1.getSelectedIndex() >= 0);
+        final boolean state1 = mother_of_all_state & jCheckBox1.isSelected() && (lstBrokingFirm.getSelectedIndex() >= 0);
 
         jCheckBox1.setEnabled(mother_of_all_state);
         
         jButton1.setEnabled(state0);
-        jButton2.setEnabled(state0);
-        jButton3.setEnabled(state0);
+        deleteBrokingFirm.setEnabled(state0);
+        editBrokingFirm.setEnabled(state0);
         jLabel1.setEnabled(state0);
-        jList1.setEnabled(state0);
+        lstBrokingFirm.setEnabled(state0);
         jPanel2.setEnabled(state0);
         jPanel6.setEnabled(state0);
 
@@ -581,7 +581,7 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
     public void set(JStockOptions jStockOptions) {
         final int size = jStockOptions.getBrokingFirmSize();
         
-        final DefaultListModel defaultListModel = (DefaultListModel)(this.jList1.getModel());
+        final DefaultListModel defaultListModel = (DefaultListModel)(this.lstBrokingFirm.getModel());
         for(int i = 0; i < size; i++) {
             brokingFirms.add(new BrokingFirm(jStockOptions.getBrokingFirm(i)));
             defaultListModel.addElement(brokingFirms.get(i).getName());
@@ -591,7 +591,7 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
         this.jCheckBox1.setSelected(jStockOptions.isAutoBrokerFeeCalculationEnabled());
         
         if(jStockOptions.getSelectedBrokingFirmIndex() >= 0) {
-            this.jList1.setSelectedIndex(jStockOptions.getSelectedBrokingFirmIndex());
+            this.lstBrokingFirm.setSelectedIndex(jStockOptions.getSelectedBrokingFirmIndex());
         }
 
         this.updateGUIState();
@@ -611,15 +611,15 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
         
         jStockOptions.setAutoBrokerFeeCalculationEnabled(this.jCheckBox1.isSelected());
         
-        jStockOptions.setSelectedBrokingFirmIndex(this.jList1.getSelectedIndex());
+        jStockOptions.setSelectedBrokingFirmIndex(this.lstBrokingFirm.getSelectedIndex());
         
         return true;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton deleteBrokingFirm;
+    private javax.swing.JButton editBrokingFirm;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JFormattedTextField jFormattedTextField1;
@@ -641,7 +641,6 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -650,6 +649,7 @@ public class OptionsBrokerJPanel extends javax.swing.JPanel implements JStockOpt
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private org.jdesktop.swingx.JXHeader jXHeader1;
+    private javax.swing.JList lstBrokingFirm;
     // End of variables declaration//GEN-END:variables
 
     // For tmp storage, before user click on Apply.

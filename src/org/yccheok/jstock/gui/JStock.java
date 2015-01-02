@@ -987,7 +987,7 @@ public class JStock extends javax.swing.JFrame {
     }
 
     /**
-     * Dettach all and stop Ajax threading activity in combo box. Once stop, 
+     * detach all and stop Ajax threading activity in combo box. Once stop, 
      * this combo box can no longer be reused.
      */
     private void dettachAllAndStopAutoCompleteJComboBox() {
