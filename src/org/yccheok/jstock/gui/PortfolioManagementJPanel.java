@@ -463,7 +463,14 @@ public class PortfolioManagementJPanel extends javax.swing.JPanel {
     public boolean openAsCSVFile(File file) {
         File f = new File(org.yccheok.jstock.portfolio.Utils.getPortfolioDirectory(),"config.xml");
         PortFolioOptions pOpt = Utils.fromXML(PortFolioOptions.class, f);
-        cmbBroker.setSelectedItem(pOpt.getBroker());
+        for(int i=0; i<cmbBroker.getItemCount(); i++){
+            BrokingFirm bf = cmbBroker.getItemAt(i);
+            if(bf.getName().equals(pOpt.getBroker().getName())){                
+                cmbBroker.setSelectedIndex(i);
+                break;
+            }
+            
+        }
         final Statements statements = Statements.newInstanceFromCSVFile(file);
         return this.openAsStatements(statements, file);
     }
