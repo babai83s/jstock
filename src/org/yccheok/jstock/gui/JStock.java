@@ -370,7 +370,7 @@ public class JStock extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jMenuBar2 = new javax.swing.JMenuBar();
-        jMenu3 = new javax.swing.JMenu();
+        fileMenu = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
@@ -504,7 +504,7 @@ public class JStock extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.GridLayout(2, 1));
         getContentPane().add(jPanel2, java.awt.BorderLayout.NORTH);
 
-        jMenu3.setText(bundle.getString("MainFrame_File")); // NOI18N
+        fileMenu.setText(bundle.getString("MainFrame_File")); // NOI18N
 
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/16x16/project_open.png"))); // NOI18N
         jMenuItem2.setText(bundle.getString("MainFrame_Open...")); // NOI18N
@@ -513,7 +513,7 @@ public class JStock extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem2);
+        fileMenu.add(jMenuItem2);
 
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/16x16/filesave.png"))); // NOI18N
         jMenuItem9.setText(bundle.getString("MainFrame_SaveAs...")); // NOI18N
@@ -522,8 +522,8 @@ public class JStock extends javax.swing.JFrame {
                 jMenuItem9ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem9);
-        jMenu3.add(jSeparator7);
+        fileMenu.add(jMenuItem9);
+        fileMenu.add(jSeparator7);
 
         jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/16x16/download_from_cloud.png"))); // NOI18N
         jMenuItem11.setText(bundle.getString("MainFrame_OpenFromCloud...")); // NOI18N
@@ -532,7 +532,7 @@ public class JStock extends javax.swing.JFrame {
                 jMenuItem11ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem11);
+        fileMenu.add(jMenuItem11);
 
         jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/16x16/upload_to_cloud.png"))); // NOI18N
         jMenuItem10.setText(bundle.getString("MainFrame_SaveToCloud...")); // NOI18N
@@ -541,8 +541,8 @@ public class JStock extends javax.swing.JFrame {
                 jMenuItem10ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem10);
-        jMenu3.add(jSeparator8);
+        fileMenu.add(jMenuItem10);
+        fileMenu.add(jSeparator8);
 
         jMenuItem1.setText(bundle.getString("MainFrame_Exit")); // NOI18N
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -550,9 +550,9 @@ public class JStock extends javax.swing.JFrame {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem1);
+        fileMenu.add(jMenuItem1);
 
-        jMenuBar2.add(jMenu3);
+        jMenuBar2.add(fileMenu);
 
         jMenu5.setText(bundle.getString("MainFrame_Edit")); // NOI18N
 
@@ -660,24 +660,24 @@ public class JStock extends javax.swing.JFrame {
 
         jMenu9.setText(bundle.getString("MainFrame_Watchlist")); // NOI18N
         jMenu9.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                jMenu9MenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jMenu9MenuSelected(evt);
             }
         });
         jMenuBar2.add(jMenu9);
 
         jMenu8.setText(bundle.getString("MainFrame_Portfolio")); // NOI18N
         jMenu8.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                jMenu8MenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jMenu8MenuSelected(evt);
             }
         });
         jMenuBar2.add(jMenu8);
@@ -1291,7 +1291,7 @@ public class JStock extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     public void saveToCloud() {
-        jMenu3.setEnabled(false);
+        fileMenu.setEnabled(false);
         
         SwingWorker swingWorker = new SwingWorker<Pair<Pair<Credential, String>, Boolean>, Void>() {
 
@@ -1303,7 +1303,7 @@ public class JStock extends javax.swing.JFrame {
             
             @Override
             public void done() { 
-                jMenu3.setEnabled(true);
+                fileMenu.setEnabled(true);
                 
                 Pair<Pair<Credential, String>, Boolean> pair = null;
                 
@@ -1330,7 +1330,7 @@ public class JStock extends javax.swing.JFrame {
     }
     
     public void loadFromCloud() {
-        jMenu3.setEnabled(false);
+        fileMenu.setEnabled(false);
         
         SwingWorker swingWorker = new SwingWorker<Pair<Pair<Credential, String>, Boolean>, Void>() {
 
@@ -1345,7 +1345,7 @@ public class JStock extends javax.swing.JFrame {
             
             @Override
             public void done() { 
-                jMenu3.setEnabled(true);
+                fileMenu.setEnabled(true);
                 
                 Pair<Pair<Credential, String>, Boolean> pair = null;
                 
@@ -4856,13 +4856,13 @@ public class JStock extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.JMenu fileMenu;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;

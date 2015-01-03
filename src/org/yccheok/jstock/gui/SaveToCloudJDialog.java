@@ -65,7 +65,7 @@ public class SaveToCloudJDialog extends javax.swing.JDialog {
         this.jLabel5.setVisible(false);
         
         if (false == credentialFromDisk) {
-            jButton1.doClick();
+            okButton.doClick();
         }        
     }
 
@@ -82,7 +82,7 @@ public class SaveToCloudJDialog extends javax.swing.JDialog {
         jPanel6 = new javax.swing.JPanel();
         jXHeader1 = new org.jdesktop.swingx.JXHeader();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        okButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -116,14 +116,14 @@ public class SaveToCloudJDialog extends javax.swing.JDialog {
         jXHeader1.setTitle(bundle.getString("SaveToCloudJDialog_Title")); // NOI18N
         getContentPane().add(jXHeader1, java.awt.BorderLayout.NORTH);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/16x16/apply.png"))); // NOI18N
-        jButton1.setText(bundle.getString("SaveToCloudJDialog_OK")); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        okButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/16x16/apply.png"))); // NOI18N
+        okButton.setText(bundle.getString("SaveToCloudJDialog_OK")); // NOI18N
+        okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                okButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton1);
+        jPanel3.add(okButton);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/16x16/button_cancel.png"))); // NOI18N
         jButton2.setText(bundle.getString("SaveToCloudJDialog_Cancel")); // NOI18N
@@ -259,8 +259,8 @@ public class SaveToCloudJDialog extends javax.swing.JDialog {
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_jLabel5MouseExited
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.jButton1.setEnabled(false);
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        this.okButton.setEnabled(false);
 
         // Update GUI immediately. So that user will not feel our app is slow.
         jLabel3.setText(GUIBundle.getString("SaveToCloudJDialog_PreparingData..."));
@@ -270,7 +270,7 @@ public class SaveToCloudJDialog extends javax.swing.JDialog {
 
         this.saveToCloudTask = this.getSaveToCloudTask("");
         this.saveToCloudTask.execute();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_okButtonActionPerformed
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         Utils.launchWebBrowser(org.yccheok.jstock.network.Utils.getURL(org.yccheok.jstock.network.Utils.Type.PRIVACY_HTML));
@@ -343,7 +343,7 @@ public class SaveToCloudJDialog extends javax.swing.JDialog {
                     }
                 }
 
-                jButton1.setEnabled(true);
+                okButton.setEnabled(true);
 
                 if (result == true) {
                     JOptionPane.showMessageDialog(SaveToCloudJDialog.this, GUIBundle.getString("SaveToCloudJDialog_Success"));
@@ -549,6 +549,7 @@ public class SaveToCloudJDialog extends javax.swing.JDialog {
     }
 
     // When we perform XML to CSV migration, this function needs to be revised.
+    
     private static List<String> getExtensions(String name) {
         List<String> extensions = new ArrayList<String>();
         if (name.equals("config")) {
@@ -564,6 +565,7 @@ public class SaveToCloudJDialog extends javax.swing.JDialog {
             extensions.add(".bmp");
         } else if (name.equals("portfolios")) {
             extensions.add(".csv");
+            extensions.add(".xml");
         } else if (name.equals("watchlist")) {
             extensions.add(".csv");
         } else if (name.equals("android")) {
@@ -816,7 +818,6 @@ public class SaveToCloudJDialog extends javax.swing.JDialog {
     private static final Log log = LogFactory.getLog(LoadFromCloudJDialog.class);
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;
@@ -835,6 +836,7 @@ public class SaveToCloudJDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private org.jdesktop.swingx.JXHeader jXHeader1;
+    private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 
 }
